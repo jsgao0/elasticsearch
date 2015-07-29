@@ -1,9 +1,7 @@
 [[docs-index_]]
 == Index API
 
-The index API adds or updates a typed JSON document in a specific index,
-making it searchable. The following example inserts the JSON document
-into the "twitter" index, under a type called "tweet" with an id of 1:
+Index API在一個特定的索引，新增或更新一個已轉化的JSON文件，使其變得可以搜尋。 以下範例插入一個JSON文件到"twitter"索引，後方有一個名為"tweet"的類型及值為1的id:
 
 [source,js]
 --------------------------------------------------
@@ -14,7 +12,7 @@ $ curl -XPUT 'http://localhost:9200/twitter/tweet/1' -d '{
 }'
 --------------------------------------------------
 
-The result of the above index operation is:
+上方的操作結果為:
 
 [source,js]
 --------------------------------------------------
@@ -29,24 +27,13 @@ The result of the above index operation is:
 
 [float]
 [[index-creation]]
-=== Automatic Index Creation
+=== 自動建立索引
 
-The index operation automatically creates an index if it has not been
-created before (check out the
-<<indices-create-index,create index API>> for manually
-creating an index), and also automatically creates a
-dynamic type mapping for the specific type if one has not yet been
-created (check out the <<indices-put-mapping,put mapping>>
-API for manually creating a type mapping).
+如果索引事先沒有被建立(請參閱手動建立索引那章)，索引操作會自動建立一個索引；此外，若其中一個類型沒被建立mapping(請參閱手動建立mapping那章)，還會為該類型自動建立一個動態的類型mapping。
 
-The mapping itself is very flexible and is schema-free. New fields and
-objects will automatically be added to the mapping definition of the
-type specified. Check out the <<mapping,mapping>>
-section for more information on mapping definitions.
+mapping本身是非常彈性，且是無架構的。新的欄位和物件會被自動加到指定類型的mapping定義。 請參閱mapping章節，以取得更mapping定義的資訊。
 
-Note that the format of the JSON document can also include the type (very handy
-when using JSON mappers) if the `index.mapping.allow_type_wrapper` setting is
-set to true, for example:
+注意! 如果設定`index.mapping.allow_type_wrapper`為`true`，JSON文件的格式也可以包含類型(在使用JSON mapper的時候很方便)，舉例來說:
 
 [source,js]
 --------------------------------------------------
@@ -68,15 +55,10 @@ $ curl -XPUT 'http://localhost:9200/twitter/tweet/1' -d '{
 }'
 --------------------------------------------------
 
-Automatic index creation can be disabled by setting
-`action.auto_create_index` to `false` in the config file of all nodes.
-Automatic mapping creation can be disabled by setting
-`index.mapper.dynamic` to `false` in the config files of all nodes (or
-on the specific index settings).
+在所有nodes的config檔案，自動建立索引是可以藉由將`action.auto_create_index`設為`false`而關閉。
+在所有nodes的config檔案(或指定索引的設定)，自動建立mapping是可以藉由將`index.mapper.dynamic`設為`false`而關閉。
 
-Automatic index creation can include a pattern based white/black list,
-for example, set `action.auto_create_index` to `+aaa*,-bbb*,+ccc*,-*` (+
-meaning allowed, and - meaning disallowed).
+自動建立索引可以包含一個基於white/black清單的pattern，舉例來說: 將`action.auto_create_index`設為`+aaa*,-bbb*,+ccc*,-*`(+為允許，-為禁止)。
 
 [float]
 [[index-versioning]]
